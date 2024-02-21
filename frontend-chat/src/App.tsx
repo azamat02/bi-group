@@ -16,7 +16,7 @@ export interface Suggestion {
 
 export async function fetchSuggestions(): Promise<Suggestion[]> {
     try {
-        const response = await axios.get<Suggestion[]>('http://localhost:3000/api/user/suggestions');
+        const response = await axios.get<Suggestion[]>('http://backend:3000/api/user/suggestions');
         return response.data;
     } catch (error) {
         console.error('Error fetching suggestions:', error);
@@ -108,7 +108,7 @@ function App() {
     const [showSuggestions, setShowSuggestions] = useState(false)
     const fetchChatHistory = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/api/chats'); // Adjust the URL based on your API endpoint
+            const response = await axios.get('http://backend:3000/api/chats'); // Adjust the URL based on your API endpoint
             const data = response.data;
             setChats(data)
         } catch (error) {
@@ -288,7 +288,7 @@ function App() {
     messages.map((message, index, messagesArray) => {
         const createdAt = new Date(message.createdAt)
         const time = formatTime(createdAt)
-        const url = selectedChat?.userInfo.profileImageId !== 'default' ? `http://localhost:3000/api/user/user-image/${selectedChat?.userInfo.profileImageId}`: 'https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png'
+        const url = selectedChat?.userInfo.profileImageId !== 'default' ? `http://backend:3000/api/user/user-image/${selectedChat?.userInfo.profileImageId}`: 'https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png'
         const date = (
             <div className="sticky top-0 flex justify-center">
                 <p className="text-center my-5 text-lg bg-gray-200 text-gray-600 px-10 py-1 rounded-full">
@@ -345,7 +345,7 @@ function App() {
     })
 
     const renderedChats = chats?.map((chat) => {
-        const url = chat.userInfo.profileImageId !== 'default' ? `http://localhost:3000/api/user/user-image/${chat.userInfo.profileImageId}`: 'https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png'
+        const url = chat.userInfo.profileImageId !== 'default' ? `http://backend:3000/api/user/user-image/${chat.userInfo.profileImageId}`: 'https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png'
         const time = formatTime(new Date(chat.messages[chat.messages.length-1].createdAt))
 
         if (searchValue) {
@@ -491,7 +491,7 @@ function App() {
                         <div className="flex gap-5 items-center border-b-2 pb-4">
                             <img
                                 className={'w-12 h-12 rounded-full'}
-                                src={selectedChat?.userInfo.profileImageId !== 'default' ? `http://localhost:3000/api/user/user-image/${selectedChat.userInfo.profileImageId}`: 'https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png'}
+                                src={selectedChat?.userInfo.profileImageId !== 'default' ? `http://backend:3000/api/user/user-image/${selectedChat.userInfo.profileImageId}`: 'https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png'}
                                 alt="profile_image"/>
                             <p className="text-xl">
                                 {selectedChat.userInfo.firstName}
