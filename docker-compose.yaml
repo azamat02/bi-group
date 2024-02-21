@@ -13,7 +13,7 @@ services:
   frontend-chat:
     build: ./frontend-chat
     ports:
-      - "8080:80"  # Assuming frontend-chat-flats is served on port 80 by Nginx
+      - "80:80"  # Assuming frontend-chat-flats is served on port 80 by Nginx
 
 #  frontend-flats:
 #    build: ./frontend-flats
