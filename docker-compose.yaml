@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://user:password@db:5432/mydatabase
+
+  frontend-chat:
+    build: ./frontend-chat
+    ports:
+      - "8080:80"  # Assuming frontend-chat-flats is served on port 80 by Nginx
+
+#  frontend-flats:
+#    build: ./frontend-flats
+#    ports:
+#      - "8081:80"  # Assuming frontend2 is served on port 80 by Nginx
+
+  db:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  db-data:
