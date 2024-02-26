@@ -29,7 +29,7 @@ RUN rm -rf ./*
 COPY --from=build /app/build .
 
 # Copy the custom Nginx configuration file into the container
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY default.conf /etc/nginx/nginx.conf
 
 # Containers run nginx with global directives and daemon off
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
