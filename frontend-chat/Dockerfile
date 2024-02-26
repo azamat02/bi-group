@@ -26,7 +26,7 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 
 # Copy static assets from builder stage
-COPY --from=build /app/build .
+COPY --from=build /app/dist .
 
 # Copy the custom Nginx configuration file into the container
 COPY default.conf /etc/nginx/nginx.conf
