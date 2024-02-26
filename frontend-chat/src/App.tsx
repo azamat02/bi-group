@@ -4,10 +4,10 @@ import {MagnifyingGlassIcon, PaperAirplaneIcon} from "@heroicons/react/24/solid"
 import {IconBulb, IconCheck, IconChecks} from "@tabler/icons-react";
 import {XMarkIcon} from "@heroicons/react/24/outline";
 
-// const backendURL = 'http://64.23.175.160:3000'
-// const wsURL = 'ws://64.23.175.160:8080'
-const backendURL = 'http://localhost:3000'
-const wsURL = 'ws://localhost:8080'
+const backendURL = 'http://64.23.175.160:3000'
+const wsURL = 'ws://64.23.175.160:8080'
+// const backendURL = 'http://localhost:3000'
+// const wsURL = 'ws://localhost:8080'
 
 export interface Suggestion {
     id: number
