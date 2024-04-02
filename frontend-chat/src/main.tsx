@@ -16,7 +16,7 @@ const CallComponent = () => {
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />,
+        element: <CallComponent />,
     },
     {
         path: '/call',

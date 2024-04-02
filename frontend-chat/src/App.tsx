@@ -121,6 +121,7 @@ function App() {
         }
     };
 
+
     const addMessageToChatState = (message: Message, userId: string): void => {
         console.log(message)
         setChats((currentChats) => {
