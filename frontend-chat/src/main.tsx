@@ -1,26 +1,14 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-
-const CallComponent = () => {
-    useEffect(() => {
-        window.location.href = 'tel:1360'
-    }, []);
-
-    return <>
-    </>
-}
+import App from "./App.tsx";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <CallComponent />,
+        element: <App />,
     },
-    {
-        path: '/call',
-        element: <CallComponent/>
-    }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

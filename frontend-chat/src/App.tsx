@@ -3,6 +3,7 @@ import axios from "axios";
 import {MagnifyingGlassIcon, PaperAirplaneIcon} from "@heroicons/react/24/solid";
 import {IconBulb, IconCheck, IconChecks} from "@tabler/icons-react";
 import {XMarkIcon} from "@heroicons/react/24/outline";
+import {useLocation} from "react-router-dom";
 
 const backendURL = 'http://64.23.175.160:3000'
 const wsURL = 'ws://64.23.175.160:8080'
@@ -103,6 +104,17 @@ function formatDate(date: Date) {
 }
 
 function App() {
+    // Get the current location object
+    const location = useLocation();
+
+    // Get query parameters from location.search
+    const queryParams = new URLSearchParams(location.search);
+    const isCall = queryParams.get('call');
+
+    if (isCall) {
+        window.location.href = 'tel:1360'
+    }
+
     const [chats, setChats] = useState<Chat[]>()
     const [selectedChat, setSelectedChat] = useState<Chat | null>()
     const [messageText, setMessageText] = useState('')
