@@ -50,20 +50,30 @@ bot.hears('🗺 Карта точек ОП', (ctx) => {
     };
 
     // Отправка информации о первой локации
-    ctx.replyWithLocation(location1.latitude, location1.longitude).then(() => {
-        ctx.reply(location1.text, Markup.inlineKeyboard([
-            [Markup.button.url('Ссылка на Яндекс Карты 🗺', location1.yandexMapUrl)],
-            [Markup.button.url('Ссылка на карту 2GIS 🗺', location1.twoGisMapUrl)]
-        ]));
+    ctx.reply(location1.text, Markup.inlineKeyboard([
+        [Markup.button.url('Ссылка на Яндекс Карты 🗺', location1.yandexMapUrl)],
+        [Markup.button.url('Ссылка на карту 2GIS 🗺', location1.twoGisMapUrl)]
+    ]));
 
-        // Отправка информации о второй локации
-        ctx.replyWithLocation(location2.latitude, location2.longitude).then(() => {
-            ctx.reply(location2.text, Markup.inlineKeyboard([
-                [Markup.button.url('Ссылка на Яндекс Карты 🗺', location2.yandexMapUrl)],
-                [Markup.button.url('Ссылка на карту 2GIS 🗺', location2.twoGisMapUrl)]
-            ]));
-        });
-    });
+    ctx.reply(location2.text, Markup.inlineKeyboard([
+        [Markup.button.url('Ссылка на Яндекс Карты 🗺', location2.yandexMapUrl)],
+        [Markup.button.url('Ссылка на карту 2GIS 🗺', location2.twoGisMapUrl)]
+    ]));
+    // ctx.replyWithLocation(location1.latitude, location1.longitude).then(() => {
+    //     ctx.reply(location1.text, Markup.inlineKeyboard([
+    //         [Markup.button.url('Ссылка на Яндекс Карты 🗺', location1.yandexMapUrl)],
+    //         [Markup.button.url('Ссылка на карту 2GIS 🗺', location1.twoGisMapUrl)]
+    //     ]));
+    //
+    //     // Отправка информации о второй локации
+    //     ctx.replyWithLocation(location2.latitude, location2.longitude).then(() => {
+    //         ctx.reply(location2.text, Markup.inlineKeyboard([
+    //             [Markup.button.url('Ссылка на Яндекс Карты 🗺', location2.yandexMapUrl)],
+    //             [Markup.button.url('Ссылка на карту 2GIS 🗺', location2.twoGisMapUrl)]
+    //         ]));
+    //     });
+    // });
+
 });
 
 bot.hears('ℹ️ Информация о компании', (ctx) => {
