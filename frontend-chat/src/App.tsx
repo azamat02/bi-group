@@ -113,6 +113,7 @@ function App() {
 
     if (isCall) {
         window.location.href = 'tel:1360'
+        return
     }
 
     const [chats, setChats] = useState<Chat[]>()
