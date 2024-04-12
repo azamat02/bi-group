@@ -2,41 +2,49 @@ const { Scenes, Markup } = require('telegraf');
 const {saveMessage} = require("../db/models");
 const {broadcast} = require("../webhooks/websocket");
 const pool = require("../db");
+const {translations} = require("./index");
 
 function setupScenes(stage) {
     const chatScene = new Scenes.BaseScene('chatScene');
     const suggestionScene = new Scenes.BaseScene('suggestionScene');
 
-    suggestionScene.enter((ctx) => ctx.reply('Напишите любые предложения по улучшению работы бота:'));
+    suggestionScene.enter((ctx) => {
+        const language = ctx.session.language || 'ru';
+        ctx.reply(translations[language].suggestionPrompt);
+    });
     suggestionScene.on('text', async (ctx) => {
         const suggestion = ctx.message.text;
         const userId = ctx.from.id;
         const { username, first_name, last_name } = ctx.from;
 
-        // Сохранение предложения в базе данных
+        // Save the suggestion in the database
         await pool.query('INSERT INTO suggestions(user_id, username, first_name, last_name, suggestion) VALUES($1, $2, $3, $4, $5)', [userId, username, first_name, last_name, suggestion]);
 
-        ctx.reply('Спасибо за ваше предложение!');
+        const language = ctx.session.language || 'ru';
+        ctx.reply(translations[language].suggestionThanks);
         ctx.scene.leave();
     });
-    chatScene.enter((ctx) => ctx.reply('Добро пожаловать в чат поддержки! Чтобы мы могли вам помочь, пожалуйста, сначала напишите ваше сообщение или опишите вопрос. Сразу после того, как мы получим ваше обращение, наш консультант свяжется с вами! Введите /exit для выхода. ', Markup.keyboard([
-        ['Выход с чата']
-    ])));
+    chatScene.enter((ctx) => {
+        const language = ctx.session.language || 'ru';
+        ctx.reply(translations[language].chatWelcome, Markup.keyboard([
+            [translations[language].chatExit]
+        ]).resize());
+    });
     chatScene.on('text', async (ctx) => {
         const text = ctx.message.text;
-        if (text === '/exit' || text === 'Выход с чата') {
-            ctx.reply('Вы вышли из чата с консультантом.');
-            ctx.reply('Выберите действие:', Markup.keyboard([
-                ['ℹ️ Информация о компании'],
-                ['🗺 Карта точек ОП'],
-                ['🤳 Наши социальные сети'],
-                ['❓ Часто задаваемые вопросы'],
-                ['💡 Ваши предложения по улучшению бота'],
-                ['📞 Позвонить в колл-центр'],
-                ['💬 Чат с консультантом'],
-                ['🏘 Посмотреть доступные ЖК']
+        const language = ctx.session.language || 'ru';
+        if (text === '/exit' || text === translations[language].chatExit) {
+            ctx.reply(translations[language].chatExit);
+            ctx.reply(translations[language].chooseOption, Markup.keyboard([
+                [translations[language].companyInfo],
+                [translations[language].addresses],
+                [translations[language].call],
+                [translations[language].chatWithConsultant],
+                [translations[language].socialMedia],
+                [translations[language].suggestions],
             ]).resize());
-            return ctx.scene.leave();
+            ctx.scene.leave();
+            return;
         }
 
         const photos = await ctx.telegram.getUserProfilePhotos(ctx.from.id);
@@ -62,7 +70,10 @@ function setupScenes(stage) {
             console.error('Error in webhook route:', error);
         }
     });
-    chatScene.on('message', (ctx) => ctx.reply('Пожалуйста, отправляйте только текстовые сообщения.'));
+    chatScene.on('message', (ctx) => {
+        const language = ctx.session.language || 'ru';
+        ctx.reply(translations[language].textOnly);
+    });
 
     stage.register(chatScene);
     stage.register(suggestionScene);
