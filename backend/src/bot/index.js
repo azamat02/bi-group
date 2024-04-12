@@ -4,7 +4,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 const stage = new Scenes.Stage([]);
 setupScenes(stage);
 
-export const translations = {
+const translations = {
     ru: {
         chooseOption: 'Выберите действие',
         greeting: (name) => `Привет, ${name}! 👋\nДобро пожаловать в официального бота BI Group. Чем мы можем помочь?`,
@@ -175,4 +175,4 @@ bot.hears(['🤳 Социальные сети', '🤳 Ijtimoiy tarmoqlar'], (ct
 
 
 // Export the bot, it can be started from server.js
-module.exports = { bot };
+module.exports = { bot, translations };
