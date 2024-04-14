@@ -71,7 +71,6 @@ const translations = {
     }
 };
 
-
 bot.use(session());
 bot.use(stage.middleware());
 
