@@ -7,7 +7,11 @@ setupScenes(stage);
 const translations = {
     ru: {
         chooseOption: 'Выберите действие',
-        greeting: (name) => `Привет, ${name}! 👋\nДобро пожаловать в официального бота BI Group. Чем мы можем помочь?`,
+        greeting: (name) => `
+        BI Group Tashkent xalqaro xoldingining chatbotiga xush kelibsiz! ✅
+
+        Вас приветствует чат-бот международного холдинга BI Group Ташкент! ✅`,
+        ourProjects: '🏠 Наши проекты',
         companyInfo: 'ℹ️ Информация о компании',
         addresses: '🗺 Наши адреса',
         call: '📞 Позвонить',
@@ -15,9 +19,10 @@ const translations = {
         socialMedia: '🤳 Социальные сети',
         suggestions: '💡 Ваши предложения по улучшению бота',
         viewProperties: '🏘 Посмотреть доступные ЖК',
+        locationsTitle: 'Отделы продаж',
         propertiesButton: 'Посмотреть ЖК',
-        salesDepartment: 'Отдел продаж\nАдрес: ул. Шахриабад, 69, Мирзо-Улугбекский район, массив Ялангач',
-        centralSalesDepartment: 'Центральный отдел продаж\nАдрес: ул. Нукус 91/1',
+        salesDepartment: 'ул. Шахриабад, 69, Мирзо-Улугбекский район, массив Ялангач',
+        centralSalesDepartment: 'ул. Нукус 91/1',
         yandexMapsLink: 'Ссылка на Яндекс Карты 🗺',
         twoGisMapsLink: 'Ссылка на карту 2GIS 🗺',
         companyDesc: `
@@ -35,11 +40,16 @@ const translations = {
         suggestionThanks: 'Спасибо за ваше предложение!',
         chatWelcome: 'Добро пожаловать в чат поддержки! Чтобы мы могли вам помочь, пожалуйста, сначала напишите ваше сообщение или опишите вопрос. Сразу после того, как мы получим ваше обращение, наш консультант свяжется с вами! Введите /exit для выхода.',
         chatExit: 'Вы вышли из чата с консультантом.',
-        textOnly: 'Пожалуйста, отправляйте только текстовые сообщения.'
+        textOnly: 'Пожалуйста, отправляйте только текстовые сообщения.',
     },
     uz: {
         chooseOption: 'Harakatni tanlang',
-        greeting: (name) => `Salom, ${name}! 👋\nBI Group rasmiy botiga xush kelibsiz. Qanday yordam bera olishimiz mumkin?`,
+        greeting: (name) => `
+        BI Group Tashkent xalqaro xoldingining chatbotiga xush kelibsiz! ✅
+
+        Вас приветствует чат-бот международного холдинга BI Group Ташкент! ✅
+        `,
+        ourProjects: '🏠 Bizning loyihalarimiz',
         companyInfo: 'ℹ️ Kompaniya haqida ma\'lumot',
         addresses: '🗺 Bizning manzillar',
         call: '📞 Qo\'ng\'iroq qilish',
@@ -47,9 +57,10 @@ const translations = {
         socialMedia: '🤳 Ijtimoiy tarmoqlar',
         suggestions: '💡 Botni yaxshilash takliflaringiz',
         viewProperties: '🏘 Mavjud uy-joy komplekslarni ko\'rish',
+        locationsTitle: 'Savdo bo\'limlari',
         propertiesButton: 'Uy-joy komplekslarini ko\'rish',
-        salesDepartment: 'Savdo bo‘limi\nManzil: Shahriobod ko‘chasi, 69, Mirzo Ulug‘bek tumanı, Yalang‘och massivi',
-        centralSalesDepartment: 'Markaziy savdo bo‘limi\nManzil: Nukus ko‘chasi 91/1',
+        salesDepartment: 'Shahriobod ko‘chasi, 69, Mirzo Ulug‘bek tumanı, Yalang‘och massivi',
+        centralSalesDepartment: 'Nukus ko‘chasi 91/1',
         yandexMapsLink: 'Yandex Xaritalar havolasi 🗺',
         twoGisMapsLink: '2GIS Xaritasiga havola 🗺',
         companyDesc: `
@@ -75,26 +86,48 @@ bot.use(session());
 bot.use(stage.middleware());
 
 bot.start((ctx) => {
-    ctx.reply('Выберите язык / Тилни танланг:', Markup.keyboard([
+    ctx.reply('Выберите язык / Tilni tanlang:', Markup.keyboard([
         ['🇷🇺 Русский', '🇺🇿 O\'zbek']
     ]).resize().oneTime());
 });
 
-bot.hears(['🇷🇺 Русский', '🇺🇿 O\'zbek'], (ctx) => {
+bot.hears(['🇷🇺 Русский', '🇺🇿 O\'zbek'], async (ctx) => {
     const language = ctx.message.text.includes('Русский') ? 'ru' : 'uz';
     ctx.session.language = language;
     const name = ctx.from.first_name || "Гость";
 
     const welcomeMessage = translations[language].greeting(name);
 
+    const photoPath = './src/bot/coverImage.jpg'
+    await ctx.replyWithPhoto({ source: photoPath })
     ctx.reply(welcomeMessage, Markup.keyboard([
         [translations[language].companyInfo],
+        [translations[language].ourProjects],
         [translations[language].addresses],
         [translations[language].call],
         [translations[language].chatWithConsultant],
         [translations[language].socialMedia],
         [translations[language].suggestions],
     ]).resize());
+});
+
+bot.hears(['🏠 Наши проекты', '🏠 Bizning loyihalarimiz'], async (ctx) => {
+    const inlineKeyboard1 = Markup.inlineKeyboard([
+        Markup.button.url('Sad\'O', 'https://bi.group/uz-ru/landing/sado')
+    ]);
+
+    const inlineKeyboard2 = Markup.inlineKeyboard([
+        Markup.button.url('Botanika Saroiy', 'https://bi.group/uz-ru/landing/botanika-saroyi')
+    ]);
+
+    await ctx.replyWithPhoto({source: './src/bot/sado.jpg'}, {
+        parse_mode: 'Markdown',
+        ...inlineKeyboard1
+    })
+    await ctx.replyWithPhoto({source: './src/bot/botanika.jpg'}, {
+        parse_mode: 'Markdown',
+        ...inlineKeyboard2
+    })
 });
 
 bot.hears(['🏘 Посмотреть доступные ЖК', '🏘 Mavjud uy-joy komplekslarni ko\'rish'], (ctx) => {
@@ -128,15 +161,9 @@ bot.hears(['🗺 Наши адреса', '🗺 Bizning manzillar'], (ctx) => {
     };
 
     // Send the information about the first location with localization
-    ctx.reply(location1.text, Markup.inlineKeyboard([
-        [Markup.button.url(translations[language].yandexMapsLink, location1.yandexMapUrl)],
-        [Markup.button.url(translations[language].twoGisMapsLink, location1.twoGisMapUrl)]
-    ]));
-
-    // Send the information about the second location
-    ctx.reply(location2.text, Markup.inlineKeyboard([
-        [Markup.button.url(translations[language].yandexMapsLink, location2.yandexMapUrl)],
-        [Markup.button.url(translations[language].twoGisMapsLink, location2.twoGisMapUrl)]
+    ctx.reply(translations[language].locationsTitle, Markup.inlineKeyboard([
+        [Markup.button.url(translations[language].salesDepartment, location1.yandexMapUrl)],
+        [Markup.button.url(translations[language].centralSalesDepartment, location2.yandexMapUrl)],
     ]));
 });
 

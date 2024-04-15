@@ -6,7 +6,11 @@ const pool = require("../db");
 const translations = {
     ru: {
         chooseOption: 'Выберите действие',
-        greeting: (name) => `Привет, ${name}! 👋\nДобро пожаловать в официального бота BI Group. Чем мы можем помочь?`,
+        greeting: (name) => `
+        BI Group Tashkent xalqaro xoldingining chatbotiga xush kelibsiz! ✅
+
+        Вас приветствует чат-бот международного холдинга BI Group Ташкент! ✅`,
+        ourProjects: '🏠 Наши проекты',
         companyInfo: 'ℹ️ Информация о компании',
         addresses: '🗺 Наши адреса',
         call: '📞 Позвонить',
@@ -14,9 +18,10 @@ const translations = {
         socialMedia: '🤳 Социальные сети',
         suggestions: '💡 Ваши предложения по улучшению бота',
         viewProperties: '🏘 Посмотреть доступные ЖК',
+        locationsTitle: 'Отделы продаж',
         propertiesButton: 'Посмотреть ЖК',
-        salesDepartment: 'Отдел продаж\nАдрес: ул. Шахриабад, 69, Мирзо-Улугбекский район, массив Ялангач',
-        centralSalesDepartment: 'Центральный отдел продаж\nАдрес: ул. Нукус 91/1',
+        salesDepartment: 'ул. Шахриабад, 69, Мирзо-Улугбекский район, массив Ялангач',
+        centralSalesDepartment: 'ул. Нукус 91/1',
         yandexMapsLink: 'Ссылка на Яндекс Карты 🗺',
         twoGisMapsLink: 'Ссылка на карту 2GIS 🗺',
         companyDesc: `
@@ -34,11 +39,16 @@ const translations = {
         suggestionThanks: 'Спасибо за ваше предложение!',
         chatWelcome: 'Добро пожаловать в чат поддержки! Чтобы мы могли вам помочь, пожалуйста, сначала напишите ваше сообщение или опишите вопрос. Сразу после того, как мы получим ваше обращение, наш консультант свяжется с вами! Введите /exit для выхода.',
         chatExit: 'Вы вышли из чата с консультантом.',
-        textOnly: 'Пожалуйста, отправляйте только текстовые сообщения.'
+        textOnly: 'Пожалуйста, отправляйте только текстовые сообщения.',
     },
     uz: {
         chooseOption: 'Harakatni tanlang',
-        greeting: (name) => `Salom, ${name}! 👋\nBI Group rasmiy botiga xush kelibsiz. Qanday yordam bera olishimiz mumkin?`,
+        greeting: (name) => `
+        BI Group Tashkent xalqaro xoldingining chatbotiga xush kelibsiz! ✅
+
+        Вас приветствует чат-бот международного холдинга BI Group Ташкент! ✅
+        `,
+        ourProjects: '🏠 Bizning loyihalarimiz',
         companyInfo: 'ℹ️ Kompaniya haqida ma\'lumot',
         addresses: '🗺 Bizning manzillar',
         call: '📞 Qo\'ng\'iroq qilish',
@@ -46,9 +56,10 @@ const translations = {
         socialMedia: '🤳 Ijtimoiy tarmoqlar',
         suggestions: '💡 Botni yaxshilash takliflaringiz',
         viewProperties: '🏘 Mavjud uy-joy komplekslarni ko\'rish',
+        locationsTitle: 'Savdo bo\'limlari',
         propertiesButton: 'Uy-joy komplekslarini ko\'rish',
-        salesDepartment: 'Savdo bo‘limi\nManzil: Shahriobod ko‘chasi, 69, Mirzo Ulug‘bek tumanı, Yalang‘och massivi',
-        centralSalesDepartment: 'Markaziy savdo bo‘limi\nManzil: Nukus ko‘chasi 91/1',
+        salesDepartment: 'Shahriobod ko‘chasi, 69, Mirzo Ulug‘bek tumanı, Yalang‘och massivi',
+        centralSalesDepartment: 'Nukus ko‘chasi 91/1',
         yandexMapsLink: 'Yandex Xaritalar havolasi 🗺',
         twoGisMapsLink: '2GIS Xaritasiga havola 🗺',
         companyDesc: `
@@ -103,6 +114,7 @@ function setupScenes(stage) {
             ctx.reply(translations[language].chatExit);
             ctx.reply(translations[language].chooseOption, Markup.keyboard([
                 [translations[language].companyInfo],
+                [translations[language].ourProjects],
                 [translations[language].addresses],
                 [translations[language].call],
                 [translations[language].chatWithConsultant],
